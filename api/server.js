@@ -1,8 +1,9 @@
 // server.js
 require('dotenv').config();
 const express = require('express');
+const serverless = require('serverless-http');
 const cors = require('cors');
-const cardRouter = require('./routes/card.route');
+const cardRouter = require('../routes/card.route');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -21,3 +22,7 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Backend server running on http://localhost:${PORT}`);
 });
+module.exports = app;
+module.exports.handler = serverless(app);
+// don’t call app.listen() in a serverless env
+
